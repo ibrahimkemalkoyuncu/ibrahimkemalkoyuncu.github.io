@@ -3,373 +3,1527 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İbrahim Kemal Koyuncu | AFNEY SOFTWAREHOUSE</title>
-    <meta name="description" content="AFNEY SOFTWAREHOUSE - İbrahim Kemal Koyuncu, 15+ yıllık deneyimli yazılım mühendisi">
+    <title>İbrahim Kemal Koyuncu - Bilgisayar Mühendisi</title>
+    <meta name="description" content="İbrahim Kemal Koyuncu - ASP.NET, Angular uzmanı bilgisayar mühendisi. 15+ yıllık deneyim.">
+    <meta name="keywords" content="yazılım mühendisi, .NET developer, İstanbul, full stack developer">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        /* TEMEL STİLLER */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e40af;
             --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
             --dark-bg: #0f172a;
+            --card-bg: #1e293b;
             --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --border-color: rgba(59, 130, 246, 0.2);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --shadow-heavy: 0 20px 40px rgba(59, 130, 246, 0.3);
+            --light-bg: #f8fafc;
+            --light-text: #0f172a;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--dark-bg);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* LOGO STİLLERİ */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo-img {
-            height: 45px;
-            transition: all 0.3s ease;
-        }
-        
-        .hero-logo {
-            height: 120px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-logo {
-            height: 70px;
-            margin-bottom: 20px;
-        }
-        
-        .logo-img:hover, .hero-logo:hover, .footer-logo:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
+        body.light-mode {
+            background: var(--light-bg);
+            color: var(--light-text);
         }
 
-        /* NAVİGASYON */
+        body.light-mode .card-bg {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #1e293b, #0f172a, #1e40af, #2563eb);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .light-mode .animated-bg {
+            background: linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #818cf8);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .light-mode .particle {
+            background: rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
-            padding: 15px 0;
             z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
         }
-        
+
+        .light-mode nav {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .light-mode nav.scrolled {
+            background: rgba(248, 250, 252, 0.98);
+        }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 2rem;
         }
-        
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
         .nav-links {
             display: flex;
-            gap: 25px;
             list-style: none;
+            gap: 2rem;
         }
-        
+
         .nav-links a {
-            color: var(--text-primary);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
         }
-        
+
+        .light-mode .nav-links a {
+            color: #4b5563;
+        }
+
         .nav-links a:hover {
             color: var(--accent-color);
         }
-        
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--text-secondary);
             font-size: 1.5rem;
             cursor: pointer;
         }
 
-        /* HERO BÖLÜMÜ */
+        .light-mode .mobile-menu-btn {
+            color: #4b5563;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .language-switcher a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .language-switcher a.active {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 20px;
-            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
         }
-        
+
         .hero-content {
             max-width: 800px;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
         }
-        
+
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 4rem;
+            margin-bottom: 1rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
         }
-        
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
+            to { filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.6)); }
+        }
+
         .hero h2 {
             font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: #cbd5e1;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
-        
+
+        .light-mode .hero h2 {
+            color: #4b5563;
+        }
+
         .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 35px;
-            color: #94a3b8;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
+
+        .light-mode .hero p {
+            color: #4b5563;
+        }
+
         .cta-buttons {
             display: flex;
-            gap: 15px;
+            gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
-        
+
         .btn {
             padding: 12px 30px;
+            border: none;
             border-radius: 50px;
-            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
         }
-        
+
         .btn-primary {
             background: var(--gradient);
             color: white;
         }
-        
+
         .btn-secondary {
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
             background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
         }
 
-        /* HAKKIMDA BÖLÜMÜ */
-        .about-section {
+        .light-mode .btn-secondary {
+            color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 40px;
+            gap: 4rem;
             align-items: center;
         }
-        
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
         .profile-pic {
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--accent-color);
+            overflow: hidden;
             margin: 0 auto;
+            border: 5px solid var(--accent-color);
+            box-shadow: var(--shadow-heavy);
         }
-        
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        
-        .contact-item {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
-        
-        .contact-item i {
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
             color: var(--accent-color);
         }
 
-        /* DİĞER BÖLÜMLER */
-        .section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            background: #1e293b;
+        .light-mode .about-text p {
+            color: #4b5563;
         }
-        
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: var(--glass-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .contact-item {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .contact-item i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--glass-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .skill-category {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .skill-tag {
+            color: var(--light-text);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .skill-tag:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Enhanced Skills with Progress */
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .light-mode .skill-item {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .skill-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .light-mode .skill-name {
+            color: var(--light-text);
+        }
+
+        .skill-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            width: 12px;
+            height: 12px;
+            background: var(--text-muted);
+            border-radius: 50%;
+        }
+
+        .star.filled {
+            background: var(--accent-color);
+        }
+
+        .skill-years {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .timeline-content {
+            background: var(--glass-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .timeline-content {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .company {
+            color: var(--text-primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .light-mode .timeline-content .company {
+            color: var(--light-text);
+        }
+
+        .timeline-content .period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .timeline-content .period {
+            color: #6b7280;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .timeline-content li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .light-mode .timeline-content li {
+            color: #6b7280;
+        }
+
+        .timeline-content li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .light-mode .project-card {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .project-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .light-mode .project-card p {
+            color: #6b7280;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .light-mode .tech-item {
+            color: var(--light-text);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .project-media {
+            margin: 1rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .project-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .project-media:hover img {
+            transform: scale(1.03);
+        }
+
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .light-mode .project-metrics {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .light-mode .metric-label {
+            color: #6b7280;
+        }
+
+        .project-features {
+            margin-top: 1rem;
+        }
+
+        .project-features ul {
+            list-style: none;
+        }
+
+        .project-features li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .light-mode .project-features li {
+            color: #6b7280;
+        }
+
+        .project-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .education-card {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+
+        .education-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .education-card .institution {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .light-mode .education-card .institution {
+            color: var(--light-text);
+        }
+
+        .education-card .period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .education-card .period {
+            color: #6b7280;
+        }
+
+        .education-card .gpa {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .light-mode .education-card .gpa {
+            color: var(--light-text);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-top: 2rem;
+        }
+
+        .light-mode .contact-form {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .light-mode .form-group label {
+            color: var(--light-text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.05);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .form-group input,
+        .light-mode .form-group textarea {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--light-text);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .availability-status {
+            background: var(--glass-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .light-mode .availability-status {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .availability-status h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .availability-status p {
+            color: var(--text-secondary);
+        }
+
+        .light-mode .availability-status p {
+            color: #6b7280;
+        }
+
+        /* Blog Section */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .article-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .article-card {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+
+        .article-tag {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .light-mode .article-title {
+            color: var(--light-text);
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .article-excerpt {
+            color: #6b7280;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .article-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .light-mode .article-date {
+            color: #9ca3af;
+        }
+
+        .read-more {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .light-mode footer {
+            background: #e2e8f0;
+        }
+
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        
+
         .social-links a {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.1);
+            color: var(--accent-color);
+            text-decoration: none;
             transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
-        /* MOBİL UYUMLULUK */
+        .light-mode .social-links a {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .light-mode .footer-text {
+            color: #6b7280;
+        }
+
+        .footer-text p:first-child {
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .light-mode .copyright {
+            color: #9ca3af;
+        }
+
+        /* CV Download Section */
+        .cv-download {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cv-download-card {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .light-mode .cv-download-card {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .cv-download h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .cv-download p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .light-mode .cv-download p {
+            color: #6b7280;
+        }
+
+        .btn-download {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Professional Summary Enhancement */
+        .professional-summary {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .light-mode .professional-summary {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .professional-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .summary-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
         @media (max-width: 768px) {
-            /* Logo boyutları */
-            .logo-img {
-                height: 35px;
+            .summary-content {
+                grid-template-columns: 1fr;
             }
-            
-            .hero-logo {
-                height: 90px;
+        }
+
+        .summary-highlights {
+            list-style: none;
+        }
+
+        .summary-highlights li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .light-mode .summary-highlights li {
+            color: #6b7280;
+        }
+
+        .summary-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .light-mode .stat-label {
+            color: #6b7280;
+        }
+
+        /* Achievement Badges */
+        .achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+
+        .achievement-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--success-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .light-mode .achievement-badge {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            margin: 4rem 0;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .light-mode .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent-color);
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .light-mode .testimonial-text {
+            color: #6b7280;
+        }
+
+        .testimonial-author {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .testimonial-role {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .light-mode .testimonial-role {
+            color: #9ca3af;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            
-            .footer-logo {
-                height: 50px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            
-            /* Navigasyon */
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Improvements */
+        @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
-                top: 75px;
+                top: 70px;
                 left: 0;
                 right: 0;
-                background: #0f172a;
+                background: rgba(15, 23, 42, 0.98);
                 flex-direction: column;
-                padding: 20px;
-                gap: 15px;
+                align-items: center;
+                padding: 2rem;
+                gap: 1.5rem;
+                backdrop-filter: blur(10px);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
             }
-            
+
+            .light-mode .nav-links {
+                background: rgba(248, 250, 252, 0.98);
+            }
+
             .nav-links.mobile-active {
                 transform: translateY(0);
             }
-            
+
             .mobile-menu-btn {
                 display: block;
             }
-            
-            /* Hero bölümü */
+
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
-            
+
             .hero h2 {
                 font-size: 1.2rem;
             }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            /* Hakkımda bölümü */
-            .about-section {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .profile-pic {
-                width: 200px;
-                height: 200px;
-            }
-            
-            /* Diğer bölümler */
+
             .section {
-                padding: 70px 20px;
+                padding: 60px 0;
             }
-            
+
             .section-title {
                 font-size: 2rem;
-                margin-bottom: 30px;
+                margin-bottom: 2rem;
             }
-        }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero-logo {
-                height: 70px;
-            }
-            
-            .contact-info {
+            .project-metrics {
                 grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigasyon -->
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo-container">
-                <img src="logo.png" alt="AFNEY SOFTWAREHOUSE Logo" class="logo-img">
-                <span>İK Koyuncu</span>
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="logo-img">
+                İK Koyuncu
             </div>
-            
             <ul class="nav-links">
                 <li><a href="#home">Ana Sayfa</a></li>
                 <li><a href="#about">Hakkımda</a></li>
                 <li><a href="#skills">Yetenekler</a></li>
                 <li><a href="#experience">Deneyim</a></li>
                 <li><a href="#projects">Projeler</a></li>
+                <li><a href="#education">Eğitim</a></li>
                 <li><a href="#contact">İletişim</a></li>
+                <div class="language-switcher">
+                    <a href="#" class="active">TR</a>
+                    <a href="en.html">EN</a>
+                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
             </ul>
-            
             <button class="mobile-menu-btn" id="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Hero Bölümü -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <img src="logo.png" alt="AFNEY SOFTWAREHOUSE" class="hero-logo">
             <h1>İbrahim Kemal Koyuncu</h1>
             <h2>Bilgisayar Mühendisi</h2>
-            <p>15+ yıllık deneyimle ASP.NET, Angular ve Node.js alanlarında uzmanlaşmış yazılım mühendisi</p>
+            <p>ASP.NET, Angular, Node.js ve modern web teknolojileri konusunda uzmanlaşmış, 15+ yıl deneyimli yazılım geliştiricisi. Yenilikçi çözümler üreten ve sürekli öğrenmeye odaklanan bir profesyonel.</p>
             <div class="cta-buttons">
                 <a href="#projects" class="btn btn-primary">
                     <i class="fas fa-code"></i>
@@ -377,24 +1531,74 @@
                 </a>
                 <a href="#contact" class="btn btn-secondary">
                     <i class="fas fa-envelope"></i>
-                    İletişim
+                    İletişime Geç
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Hakkımda Bölümü -->
-    <section class="section" id="about">
-        <h2 class="section-title">Hakkımda</h2>
-        <div class="about-section">
-            <div>
-                <img src="profile.jpg" alt="İbrahim Kemal Koyuncu" class="profile-pic">
+    <!-- Professional Summary Section -->
+    <section class="section scroll-animate" id="summary">
+        <div class="professional-summary">
+            <div class="summary-content">
+                <div>
+                    <h2 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 2rem;">Profesyonel Özet</h2>
+                    <ul class="summary-highlights">
+                        <li>15+ yıl yazılım geliştirme deneyimi</li>
+                        <li>Büyük ölçekli sistem migrasyonları</li>
+                        <li>Full-stack web development uzmanlığı</li>
+                        <li>Hastane ve üniversite sistemleri deneyimi</li>
+                        <li>Modern teknoloji adaptasyonu</li>
+                        <li>Güvenlik odaklı geliştirme</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="15">0</span>
+                            <div class="stat-label">Yıl Deneyim</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="50">0</span>
+                            <div class="stat-label">Tamamlanan Proje</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="20">0</span>
+                            <div class="stat-label">Teknoloji</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="8">0</span>
+                            <div class="stat-label">Farklı Sektör</div>
+                        </div>
+                    </div>
+                    <div class="achievements">
+                        <div class="achievement-badge">
+                            <i class="fas fa-medal"></i>
+                            <span>En İyi Performans Ödülü</span>
+                        </div>
+                        <div class="achievement-badge">
+                            <i class="fas fa-certificate"></i>
+                            <span>Microsoft Sertifikalı</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section scroll-animate" id="about">
+        <h2 class="section-title">Hakkımda</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <div class="profile-pic">
+                    <img src="profile.jpg" alt="İbrahim Kemal Koyuncu">
+                </div>
+            </div>
+            <div class="about-text">
                 <h3>Yazılım Geliştirme Tutkusu</h3>
                 <p>15+ yıllık deneyimimle ASP.NET ve ASP.NET Core, Angular 2+, Node.js, MS SQL, Java, Oracle alanlarında uzmanlaşmış bir bilgisayar mühendisiyim. Kompleks projelerde yer alarak, yenilikçi çözümler üretme konusundaki tutkumla sektördeki gelişmeleri yakından takip ediyorum.</p>
                 <p>Boğaziçi Üniversitesi BAP sistemlerinin modernizasyonundan, hastane bilgi yönetim sistemlerine kadar geniş bir yelpazede projeler geliştirdim. Her projede en iyi uygulamaları benimser ve değer katmayı hedeflerim.</p>
-                
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
@@ -408,90 +1612,858 @@
                         <i class="fas fa-envelope"></i>
                         <span>ibrahimkemalkoyuncu@gmail.com</span>
                     </div>
+                    <div class="contact-item">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>42 Yaş (1982)</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Yetenekler Bölümü -->
-    <section class="section" id="skills">
-        <h2 class="section-title">Yetenekler</h2>
-        <!-- Yetenekler içeriği buraya gelecek -->
+    <!-- Skills Section -->
+    <section class="section scroll-animate" id="skills">
+        <h2 class="section-title">Teknik Yetenekler</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Backend Teknolojiler</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">ASP.NET Core</span>
+                    <span class="skill-tag">ASP.NET Web API</span>
+                    <span class="skill-tag">ASP.NET MVC</span>
+                    <span class="skill-tag">C#.NET</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Java Spring Boot</span>
+                    <span class="skill-tag">Entity Framework</span>
+                    <span class="skill-tag">ADO.NET</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">ASP.NET Core</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="5">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                        </div>
+                        <span class="skill-years">8 yıl</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">Node.js</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="4">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star"></div>
+                        </div>
+                        <span class="skill-years">5 yıl</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-desktop"></i> Frontend Teknolojiler</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Angular 2+</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">Bootstrap</span>
+                    <span class="skill-tag">jQuery</span>
+                    <span class="skill-tag">PrimeNG</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">Angular</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="5">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                        </div>
+                        <span class="skill-years">6 yıl</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">TypeScript</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="4">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star"></div>
+                        </div>
+                        <span class="skill-years">5 yıl</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Veritabanı</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MS SQL Server</span>
+                    <span class="skill-tag">Oracle Database</span>
+                    <span class="skill-tag">T-SQL</span>
+                    <span class="skill-tag">Transact-SQL</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">MS SQL Server</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="5">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                        </div>
+                        <span class="skill-years">12 yıl</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">Oracle</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="4">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star"></div>
+                        </div>
+                        <span class="skill-years">5 yıl</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> Araçlar & Teknolojiler</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">TFS</span>
+                    <span class="skill-tag">Angular CLI</span>
+                    <span class="skill-tag">Web Servis</span>
+                    <span class="skill-tag">REST API</span>
+                    <span class="skill-tag">SOAP</span>
+                    <span class="skill-tag">JSON</span>
+                    <span class="skill-tag">LDAP</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">GitHub</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="4">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star"></div>
+                        </div>
+                        <span class="skill-years">5 yıl</span>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name">REST API</span>
+                    <div class="skill-level">
+                        <div class="skill-stars" data-level="5">
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                            <div class="star filled"></div>
+                        </div>
+                        <span class="skill-years">7 yıl</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-brain"></i> İlgi Alanları</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Yapay Zeka</span>
+                    <span class="skill-tag">Blockchain</span>
+                    <span class="skill-tag">Design Patterns</span>
+                    <span class="skill-tag">Çok Katmanlı Mimari</span>
+                    <span class="skill-tag">NYP</span>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Deneyim Bölümü -->
-    <section class="section" id="experience">
-        <h2 class="section-title">Deneyim</h2>
-        <!-- Deneyim içeriği buraya gelecek -->
+    <!-- Experience Section -->
+    <section class="section scroll-animate" id="experience">
+        <h2 class="section-title">İş Deneyimi</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Bilgisayar Mühendisi</h3>
+                    <div class="company">SK Teknoloji</div>
+                    <div class="period">Ocak 2024 - Şubat 2025</div>
+                    <p>Boğaziçi Üniversitesi Bilimsel Araştırma Projeleri (BAP) ve Öğrenci Kayıt Sistemlerinin modernizasyonu</p>
+                    <ul>
+                        <li>Java-Oracle projesini ASP.NET Core 6.0 ve MS SQL Server'a başarıyla dönüştürdüm</li>
+                        <li>Oracle'dan MS SQL Server'a veri migrasyonu gerçekleştirdim</li>
+                        <li>Penetrasyon testleri yaparak güvenlik açıklarını tespit ettim</li>
+                        <li>LDAP entegrasyonu geliştirerek personel yetki yönetimi sağladım</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">Java Spring Boot</span>
+                        <span class="tech-item">ASP.NET Core 6.0</span>
+                        <span class="tech-item">Oracle DB</span>
+                        <span class="tech-item">MS SQL Server</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Yazılım Uzmanı</h3>
+                    <div class="company">Medicana Hastanesi</div>
+                    <div class="period">Aralık 2020 - Ağustos 2023</div>
+                    <p>Hastane Bilgi Yönetim Sistemi (HBYS) yazılımının geliştirilmesi ve iyileştirilmesi</p>
+                    <ul>
+                        <li>Web servis (SOAP ve REST) entegrasyonları geliştirdim</li>
+                        <li>Finans, Hasta Hizmetleri, İş Zekası modüllerini tasarladım</li>
+                        <li>Rapor ve analiz sorgularını yazarak form ekranlarına dönüştürdüm</li>
+                        <li>Yeni modüllerin tasarımı ve ekrana taşınması</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">.NET</span>
+                        <span class="tech-item">T-SQL</span>
+                        <span class="tech-item">Web Services</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Yazılım Uzmanı - Freelance</h3>
+                    <div class="company">Çeşitli Projeler</div>
+                    <div class="period">2019 - 2020</div>
+                    <p>E-Beyanname ve E-Ticaret uygulamaları geliştirme</p>
+                    <ul>
+                        <li>Modern web teknolojileri ile E-Beyanname sistemi geliştirdim</li>
+                        <li>Responsive ve kullanıcı dostu E-Ticaret platformu oluşturdum</li>
+                        <li>Müşteri sadakat uygulamaları tasarladım</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">ASP.NET Core</span>
+                        <span class="tech-item">Angular 8</span>
+                        <span class="tech-item">Bootstrap</span>
+                        <span class="tech-item">PrimeNG</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Yazılım Uzmanı</h3>
+                    <div class="company">Asis Elektronik ve Bilişim Sistemleri A.Ş.</div>
+                    <div class="period">Ekim 2017 - Eylül 2018</div>
+                    <p>IoT ve güvenlik sistemleri projelerinde yazılım geliştirme</p>
+                    <ul>
+                        <li>Kişi Sayma Web Projesi - RaspberryPi sensör verilerini web ortamında gösterim</li>
+                        <li>DVR ve NVR Projesi - .NET Core ile cihaz haberleşmesi</li>
+                        <li>PDKS Projesi - C# WPF ve Delphi ile personel takip sistemi</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">ASP.NET MVC 5</span>
+                        <span class="tech-item">.NET Core</span>
+                        <span class="tech-item">C# WPF</span>
+                        <span class="tech-item">Delphi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Bilgisayar Programcısı</h3>
+                    <div class="company">Şanlıurfa Belediyesi</div>
+                    <div class="period">Mart 2007 - Kasım 2014</div>
+                    <p>Belediye bilgi işlem departmanında yazılım geliştirme ve sistem yönetimi</p>
+                    <ul>
+                        <li>Kurumsal yazılım sistemlerinin geliştirilmesi</li>
+                        <li>Veritabanı yönetimi ve optimizasyonu</li>
+                        <li>Kullanıcı eğitimleri ve teknik destek</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Projeler Bölümü -->
-    <section class="section" id="projects">
-        <h2 class="section-title">Projeler</h2>
-        <!-- Projeler içeriği buraya gelecek -->
+    <!-- Projects Section -->
+    <section class="section scroll-animate" id="projects">
+        <h2 class="section-title">Öne Çıkan Projeler</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Boğaziçi Üniversitesi BAP Sistemi</h3>
+                <p>Bilimsel Araştırma Projeleri ve Öğrenci Kayıt Sistemlerinin modern teknolojilere dönüştürülmesi. Java-Oracle tabanlı eski sistemin ASP.NET Core ve MS SQL Server'a tam migrasyonu.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">ASP.NET Core 6.0</span>
+                    <span class="tech-item">Java Spring Boot</span>
+                    <span class="tech-item">Oracle → MS SQL</span>
+                    <span class="tech-item">LDAP Integration</span>
+                </div>
+                <div class="project-media">
+                    <img src="bap-project.jpg" alt="BAP Sistemi Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">%40</div>
+                        <div class="metric-label">Performans Artışı</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Başarılı Migrasyon</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">500+</div>
+                        <div class="metric-label">Günlük Kullanıcı</div>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Sistem mimarisi tasarımı ve veri migrasyonu</li>
+                        <li>Güvenlik testleri ve penetrasyon analizi</li>
+                        <li>LDAP entegrasyonu ile yetkilendirme</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="#">
+                        <i class="fas fa-external-link-alt"></i>
+                        Canlı Demo
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-github"></i>
+                        Kaynak Kod
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Medicana HBYS Modülleri</h3>
+                <p>Hastane Bilgi Yönetim Sistemi için kritik modüllerin geliştirilmesi. Finans, Hasta Hizmetleri, İş Zekası ve Malzeme modüllerinin tasarımı ve implementasyonu.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">.NET Framework</span>
+                    <span class="tech-item">T-SQL</span>
+                    <span class="tech-item">Web Services</span>
+                    <span class="tech-item">SOAP/REST API</span>
+                </div>
+                <div class="project-media">
+                    <img src="hbys-project.jpg" alt="HBYS Modülleri Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Modül</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">%30</div>
+                        <div class="metric-label">İşlem Hızı</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">7/24</div>
+                        <div class="metric-label">Çalışma Süresi</div>
+                    </div>
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Çok katmanlı mimari ile modüler tasarım</li>
+                        <li>Rapor ve analiz sistemi geliştirme</li>
+                        <li>Web servis entegrasyonları</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>E-Beyanname Sistemi</h3>
+                <p>Modern web teknolojileri kullanarak geliştirilmiş kapsamlı e-beyanname uygulaması. Kullanıcı dostu arayüz ve güvenli veri işleme.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">ASP.NET Core 3.0</span>
+                    <span class="tech-item">Angular 8</span>
+                    <span class="tech-item">PrimeNG</span>
+                    <span class="tech-item">MS SQL Server</span>
+                </div>
+                <div class="project-media">
+                    <img src="ebeyanname-project.jpg" alt="E-Beyanname Sistemi Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Responsive ve modern UI/UX tasarımı</li>
+                        <li>Güvenli veri şifreleme</li>
+                        <li>Otomatik hesaplama algoritmaları</li>
+                    </ul>
+                </div>
+                <div class="project-links">
+                    <a href="#">
+                        <i class="fas fa-external-link-alt"></i>
+                        Canlı Demo
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>E-Ticaret Platformu</h3>
+                <p>Tam özellikli e-ticaret çözümü. Ürün yönetimi, sipariş takibi, ödeme entegrasyonları ve müşteri sadakat sistemi.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">ASP.NET Core</span>
+                    <span class="tech-item">Angular 8</span>
+                    <span class="tech-item">Bootstrap</span>
+                    <span class="tech-item">MS SQL Server</span>
+                </div>
+                <div class="project-media">
+                    <img src="ecommerce-project.jpg" alt="E-Ticaret Platformu Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Çoklu ödeme sistemi entegrasyonu</li>
+                        <li>Müşteri sadakat programı</li>
+                        <li>Gerçek zamanlı stok yönetimi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>IoT Kişi Sayma Sistemi</h3>
+                <p>RaspberryPi tabanlı sensörler ile gerçek zamanlı kişi sayma ve veri görselleştirme sistemi. Web tabanlı dashboard ile anlık izleme.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">ASP.NET MVC 5</span>
+                    <span class="tech-item">RaspberryPi</span>
+                    <span class="tech-item">IoT Sensors</span>
+                    <span class="tech-item">Real-time Data</span>
+                </div>
+                <div class="project-media">
+                    <img src="iot-project.jpg" alt="IoT Kişi Sayma Sistemi Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Gerçek zamanlı veri akışı</li>
+                        <li>Grafik ve analiz dashboardu</li>
+                        <li>IoT cihaz yönetimi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Tüp Bebek Takip Sistemi</h3>
+                <p>Tüp bebek tedavi sürecinin dijital takibi için geliştirilmiş kapsamlı yönetim sistemi. Hasta kayıtları ve süreç takibi.</p>
+                <div class="tech-stack">
+                    <span class="tech-item">ASP.NET Web Forms</span>
+                    <span class="tech-item">MS SQL Server</span>
+                    <span class="tech-item">Medical Data</span>
+                </div>
+                <div class="project-media">
+                    <img src="ivf-project.jpg" alt="Tüp Bebek Takip Sistemi Ekran Görüntüsü" loading="lazy">
+                </div>
+                <div class="project-features">
+                    <ul>
+                        <li>Hasta takip ve kayıt sistemi</li>
+                        <li>Tedavi süreç yönetimi</li>
+                        <li>Raporlama ve analiz</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- İletişim Bölümü -->
-    <section class="section" id="contact">
-        <h2 class="section-title">İletişim</h2>
-        <!-- İletişim içeriği buraya gelecek -->
+    <!-- Education Section -->
+    <section class="section scroll-animate" id="education">
+        <h2 class="section-title">Eğitim</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <h3>Bilgisayar Mühendisliği (Lisans)</h3>
+                <div class="institution">Üsküdar Üniversitesi</div>
+                <div class="period">2015 - 2017</div>
+                <p>Bilgisayar Bilimleri Fakültesi - Türkçe Örgün Öğretim</p>
+                <span class="gpa">GPA: 2.48/4.00</span>
+            </div>
+            
+            <div class="education-card">
+                <h3>Bilgisayar Programcılığı (Ön Lisans)</h3>
+                <div class="institution">Kahramanmaraş Sütçü İmam Üniversitesi</div>
+                <div class="period">2001 - 2004</div>
+                <p>Karasu Meslek Yüksekokulu - İkinci Öğretim</p>
+                <span class="gpa">GPA: 2.58/4.00</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="section scroll-animate" id="blog">
+        <h2 class="section-title">Teknik Yazılar</h2>
+        <div class="articles-grid">
+            <div class="article-card">
+                <span class="article-tag">ASP.NET Core</span>
+                <h3 class="article-title">ASP.NET Core'da Performans Optimizasyonu</h3>
+                <p class="article-excerpt">ASP.NET Core uygulamalarında performansı artırmak için kanıtlanmış teknikler ve en iyi uygulamalar...</p>
+                <div class="article-meta">
+                    <span class="article-date">15 Mart 2024</span>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <span class="article-tag">Angular</span>
+                <h3 class="article-title">Angular'da State Yönetimi</h3>
+                <p class="article-excerpt">Büyük ölçekli Angular uygulamalarında state yönetimi için NgRx kullanımı ve avantajları...</p>
+                <div class="article-meta">
+                    <span class="article-date">10 Şubat 2024</span>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <span class="article-tag">Veritabanı</span>
+                <h3 class="article-title">MS SQL Server Performans İpuçları</h3>
+                <p class="article-excerpt">Veritabanı sorgularınızı optimize etmek için temel performans ipuçları ve indexleme stratejileri...</p>
+                <div class="article-meta">
+                    <span class="article-date">25 Ocak 2024</span>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section scroll-animate" id="testimonials">
+        <h2 class="section-title">Referanslar</h2>
+        <div class="testimonials">
+            <div class="testimonial-card">
+                <p class="testimonial-text">İbrahim Bey, Boğaziçi Üniversitesi BAP sisteminin dönüşümü sürecinde gösterdiği profesyonellik ve teknik becerilerle projenin başarıyla tamamlanmasını sağladı.</p>
+                <div class="testimonial-author">Ahmet Yılmaz</div>
+                <div class="testimonial-role">Proje Yöneticisi, SK Teknoloji</div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">HBYS sistemimiz için geliştirdiği modüllerle hastane iş süreçlerimizin dijitalleşmesine büyük katkı sağladı. Takım çalışmasına uyumu ve problem çözme becerisi mükemmel.</p>
+                <div class="testimonial-author">Ayşe Demir</div>
+                <div class="testimonial-role">Bilgi İşlem Müdürü, Medicana Hastanesi</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Download Section -->
+    <section class="section scroll-animate">
+        <div class="cv-download">
+            <div class="cv-download-card">
+                <h3>Özgeçmişimi İndirin</h3>
+                <p>Detaylı özgeçmişimi PDF formatında indirerek deneyimlerim ve yeteneklerim hakkında daha fazla bilgi edinebilirsiniz.</p>
+                <a href="Özgeçmiş.pdf" download class="btn-download">
+                    <i class="fas fa-file-pdf"></i>
+                    CV İndir (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section scroll-animate" id="contact">
+        <h2 class="section-title">İletişime Geçin</h2>
+        <div class="contact-container">
+            <p>Yeni projeler, iş fırsatları veya teknik konularda görüşmek için benimle iletişime geçebilirsiniz.</p>
+            
+            <div class="contact-info">
+                <div class="contact-item" style="justify-content: center; padding: 1.5rem;">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>E-posta</strong><br>
+                        <a href="mailto:ibrahimkemalkoyuncu@gmail.com" style="color: var(--accent-color); text-decoration: none;">
+                            ibrahimkemalkoyuncu@gmail.com
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-item" style="justify-content: center; padding: 1.5rem;">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Telefon</strong><br>
+                        <a href="tel:+905367701424" style="color: var(--accent-color); text-decoration: none;">
+                            +90 (536) 770 14 24
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-item" style="justify-content: center; padding: 1.5rem;">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Konum</strong><br>
+                        <span>İstanbul, Maltepe</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="availability-status">
+                <h3><i class="fas fa-clock"></i> Müsaitlik Durumu</h3>
+                <p>Yeni projeler ve iş fırsatları için açığım. Full-time, part-time veya freelance çalışma modellerine uyumum.</p>
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Adınız</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesajınız</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Mesaj Gönder</button>
+                </form>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <img src="logo.png" alt="AFNEY SOFTWAREHOUSE" class="footer-logo">
         <div class="social-links">
-            <a href="mailto:ibrahimkemalkoyuncu@gmail.com"><i class="fas fa-envelope"></i></a>
-            <a href="tel:+905367701424"><i class="fas fa-phone"></i></a>
-            <a href="https://github.com"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:ibrahimkemalkoyuncu@gmail.com" title="E-posta">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="tel:+905367701424" title="Telefon">
+                <i class="fas fa-phone"></i>
+            </a>
+            <a href="https://github.com" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
         </div>
-        <p>&copy; 2023 AFNEY SOFTWAREHOUSE. Tüm hakları saklıdır.</p>
+        
+        <div class="footer-text">
+            <p>Yapay Zeka ve Blockchain teknolojileri konusunda araştırmacı, modern web teknolojileri ile yenilikçi çözümler üreten bir yazılım mühendisi.</p>
+            <p class="copyright">&copy; 2025 İbrahim Kemal Koyuncu. Tüm hakları saklıdır.</p>
+        </div>
     </footer>
 
     <script>
-        // Mobil menü toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        mobileMenuBtn.addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('mobile-active');
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-
-        // Smooth scrolling
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    // Mobil menüyü kapat
-                    document.querySelector('.nav-links').classList.remove('mobile-active');
-                    const icon = mobileMenuBtn.querySelector('i');
-                    if (icon) {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                    
-                    // Scroll işlemi
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('.nav-links').classList.remove('mobile-active');
                 }
             });
         });
 
-        // Navbar scroll efekti
+        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
-                navbar.style.boxShadow = 'none';
+                navbar.classList.remove('scrolled');
             }
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            const windowHeight = window.innerHeight;
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Typing animation for hero text
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            
+            if (document.body.classList.contains('light-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        mobileMenuBtn.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('mobile-active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-container')) {
+                document.querySelector('.nav-links').classList.remove('mobile-active');
+            }
+        });
+
+        // Animate stats counter
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const counter = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        clearInterval(counter);
+                        stat.textContent = target + '+';
+                    } else {
+                        stat.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message
+            alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağım.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Initialize animations
+        window.addEventListener('load', () => {
+            createParticles();
+            animateOnScroll();
+            animateStats();
+            
+            // Add typing effect to hero subtitle
+            const heroSubtitle = document.querySelector('.hero h2');
+            if (heroSubtitle) {
+                const originalText = heroSubtitle.textContent;
+                setTimeout(() => {
+                    typeWriter(heroSubtitle, originalText, 150);
+                }, 1000);
+            }
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Add hover effects to cards
+        document.querySelectorAll('.project-card, .skill-category, .timeline-content, .education-card, .article-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click effect to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                let ripple = document.createElement('span');
+                let rect = this.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add dynamic background color change based on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.1;
+            document.querySelector('.animated-bg').style.transform = `translateY(${rate}px)`;
+        });
+
+        // Add intersection observer for better performance
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
